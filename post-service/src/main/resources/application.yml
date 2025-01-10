@@ -1,0 +1,48 @@
+server:
+  port: 9010
+  servlet:
+    context-path: /posts
+
+
+spring:
+  application:
+    name: post-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ms_postsDB
+    username: postgres
+    password: mypsql@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka/
+
+
+
+# for docker or kubernetes
+#
+#  datasource:
+#    url: jdbc:postgresql://${DB_SERVICE:posts-db}:5432/${DB_NAME:ms_postsDB}
+#    username: ${DB_USER:user}
+#    password: ${DB_PASSWORD:password}
+#    bootstrap-servers: kafka:9092
+#    defaultZone: http://discovery-server:8761/eureka/

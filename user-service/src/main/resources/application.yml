@@ -1,0 +1,47 @@
+server:
+  port: 9020
+spring:
+  application:
+    name: user-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ms_usersDB
+    username: postgres
+    password: mypsql@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+jwt:
+  secretKey: dvmgdjh327478238723t6jgffu8634trsfju3r862djsfgf3rt582jhjsfhjfhjvrj3566bcnc5636
+  expirationTime: 86400000
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka/
+
+
+# for docker or kubernetes
+
+#  datasource:
+#    url: jdbc:postgresql://user-db:5432/ms_userDB
+#    username: user
+#    password: password
+#defaultZone: http://discovery-server:8761/eureka/

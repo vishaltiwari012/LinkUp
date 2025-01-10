@@ -1,0 +1,49 @@
+server:
+  port: 9040
+  servlet:
+    context-path: /notifications
+
+spring:
+  application:
+    name: notification-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ms_notificationsDB
+    username: postgres
+    password: mypsql@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: ${spring.application.name}
+      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json:
+          trusted.packages: com.cw.linkedin.*
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+  serviceUrl:
+    defaultZone: http://localhost:8761/eureka/
+
+
+#for docker or kubernetes
+#  datasource:
+#    url: jdbc:postgresql://notification-db:5432/ms_notificationsDB
+#    username: user
+#    password: password
+# bootstrap-servers: kafka:9092
+#defaultZone: http://discovery-server:8761/eureka/
